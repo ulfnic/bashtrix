@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+
+# Define stderr handling
+bashtrix_core__stderr() {
+	if [[ $1 == '0' ]]; then
+		[[ $2 ]] && printf "$2" "${@:3}" 1>&2 || :
+	else
+		[[ $2 ]] && printf '%s'"$2" "ERROR: ${0##*/}, " "${@:3}" 1>&2 || :
+	fi
+}
+
+
+
