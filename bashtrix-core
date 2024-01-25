@@ -22,3 +22,12 @@ bashtrix_core__json_encode_var() {
 
 
 
+# JSON encode pipe
+bashtrix_core__json_encode_pipe() {
+	sed --null-data 's/\\/\\\\/g' | \
+	sed --null-data 's/"/\\"/g' | \
+	sed --null-data 's/\n/\\n/g'
+}
+
+
+
