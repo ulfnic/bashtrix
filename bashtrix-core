@@ -12,3 +12,13 @@ bashtrix_core__stderr() {
 
 
 
+# JSON encode variable
+bashtrix_core__json_encode_var() {
+	local -n 'bashtrix_core__json_encode_var__out='"$1"
+	bashtrix_core__json_encode_var__out=${bashtrix_core__json_encode_var__out//\\/\\\\}
+	bashtrix_core__json_encode_var__out=${bashtrix_core__json_encode_var__out//\"/\\\"} #"
+	bashtrix_core__json_encode_var__out=${bashtrix_core__json_encode_var__out//$'\n'/\\n}
+}
+
+
+
