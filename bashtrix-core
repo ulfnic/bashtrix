@@ -31,3 +31,29 @@ bashtrix_core__json_encode_pipe() {
 
 
 
+# Perform login
+bashtrix_core__login() {
+	[[ $MATRIX__BASE_URL ]] || { bashtrix_core__stderr '%s\n' 'MATRIX__BASE_URL is empty'; return 1; }
+	[[ $MATRIX__USER ]] || { bashtrix_core__stderr '%s\n' 'MATRIX__USER is empty'; return 1; }
+
+	bashtrix_core__json_encode_var MATRIX__USER
+
+	curl \
+		-X POST \
+		-d @<(
+			cat <<-EOF
+				{
+					"identifier": {
+						"type": "m.id.user",
+						"user": "$MATRIX__USER"
+					},
+					"password": "$(cat /dev/fd/3 | bashtrix_core__json_encode_pipe)",
+					"type": "m.login.password"
+				}
+			EOF
+		) \
+		"$MATRIX__BASE_URL"'/_matrix/client/v3/login'
+}
+
+
+
